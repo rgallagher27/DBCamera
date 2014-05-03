@@ -1,0 +1,31 @@
+PODS:
+  - CLImageEditor/AllTools (0.0.8):
+    - CLImageEditor/Core
+    - CLImageEditor/EmoticonTool
+    - CLImageEditor/ResizeTool
+    - CLImageEditor/StickerTool
+    - CLImageEditor/TextTool
+  - CLImageEditor/Core (0.0.8)
+  - CLImageEditor/EmoticonTool (0.0.8):
+    - CLImageEditor/Core
+  - CLImageEditor/ResizeTool (0.0.8):
+    - CLImageEditor/Core
+  - CLImageEditor/StickerTool (0.0.8):
+    - CLImageEditor/Core
+  - CLImageEditor/TextTool (0.0.8):
+    - CLImageEditor/Core
+  - DBCamera (2.0):
+    - CLImageEditor/AllTools
+
+DEPENDENCIES:
+  - DBCamera (from `../`)
+
+EXTERNAL SOURCES:
+  DBCamera:
+    :path: ../
+
+SPEC CHECKSUMS:
+  CLImageEditor: eb0d64c86a474e68ccbc591422a5d14d773a27a4
+  DBCamera: d549e5221cd3c73dee795692a6844b4ba7228677
+
+COCOAPODS: 0.32.1

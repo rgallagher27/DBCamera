@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "DBCameraDelegate.h"
 
+#import <CLImageEditor/CLImageEditor.h>
+
 @class DBCameraView;
-@interface DBCameraViewController : UIViewController
+@interface DBCameraViewController : UIViewController <CLImageEditorDelegate>
+
 @property (nonatomic, weak) id <DBCameraViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <DBCameraContainerDelegate> containerDelegate;
 @property (nonatomic, assign) BOOL useCameraSegue;
 @property (nonatomic, strong) DBCameraView *cameraView;
+@property (nonatomic, strong) NSMutableDictionary *imageMetadata;
 
 + (DBCameraViewController *) initWithDelegate:(id<DBCameraViewControllerDelegate>)delegate;
 + (DBCameraViewController *) init;

@@ -10,10 +10,11 @@
 #import "DBLibraryManager.h"
 #import "DBCollectionViewCell.h"
 #import "DBCollectionViewFlowLayout.h"
-#import "DBCameraSegueViewController.h"
 #import "DBCameraCollectionViewController.h"
 #import "UIImage+Crop.h"
 #import "DBCameraMacros.h"
+
+#import <CLImageEditor/CLImageEditor.h>
 
 #ifndef DBCameraLocalizedStrings
 #define DBCameraLocalizedStrings(key) \
@@ -303,19 +304,21 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
             UIImage *image = [UIImage imageWithCGImage:[defaultRep fullResolutionImage]
                                                  scale:[defaultRep scale]
                                            orientation:[[asset valueForProperty:ALAssetPropertyOrientation] integerValue]];
-            NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[defaultRep metadata]];
-            metadata[@"DBCameraSource"] = @"Library";
+			
+            _imageMetadata						= [NSMutableDictionary dictionaryWithDictionary:[defaultRep metadata]];
+            _imageMetadata[@"DBCameraSource"]	= @"Library";
 
             if ( !blockSelf.useCameraSegue ) {
                 if ( [blockSelf.delegate respondsToSelector:@selector(captureImageDidFinish:withMetadata:)] )
                     [blockSelf.delegate captureImageDidFinish:[image rotateUIImage]
-                                                 withMetadata:metadata ];
+                                                 withMetadata:_imageMetadata ];
             } else {
-                DBCameraSegueViewController *segue = [[DBCameraSegueViewController alloc] initWithImage:[image rotateUIImage] thumb:[UIImage imageWithCGImage:[asset aspectRatioThumbnail]]];
-                [segue enableGestures:YES];
-                [segue setCapturedImageMetadata:metadata];
-                [segue setDelegate:blockSelf.delegate];
-                [blockSelf.navigationController pushViewController:segue animated:YES];
+				
+				CLImageEditor *editor	= [[CLImageEditor alloc] initWithImage:image];
+				editor.delegate			= self;
+				
+                [blockSelf.navigationController pushViewController:editor
+														  animated:YES];
             }
 
             [blockSelf.loading removeFromSuperview];
@@ -323,5 +326,12 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
         } failureBlock:nil];
     });
 }
+
+- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
+{
+	[_delegate captureImageDidFinish:image
+						withMetadata:_imageMetadata];
+}
+
 
 @end

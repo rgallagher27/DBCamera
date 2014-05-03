@@ -11,7 +11,6 @@
 #import "DBCameraView.h"
 #import "DBCameraGridView.h"
 #import "DBCameraDelegate.h"
-#import "DBCameraSegueViewController.h"
 #import "DBCameraLibraryViewController.h"
 #import "DBLibraryManager.h"
 
@@ -20,6 +19,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+
+#import <CLImageEditor/CLImageEditor.h>
 
 #ifndef DBCameraLocalizedStrings
 #define DBCameraLocalizedStrings(key) \
@@ -100,6 +101,13 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
         } else
             [self.view addSubview:self.cameraView];
     }
+	
+	/**
+	 * Style Image Editor
+	 */
+	[[CLImageEditorTheme theme] setBackgroundColor:[UIColor whiteColor]];
+	[[CLImageEditorTheme theme] setToolbarColor:[UIColor whiteColor]];
+	[[CLImageEditorTheme theme] setToolbarTextColor:[UIColor blackColor]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,6 +125,9 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	
+	[self.navigationController setNavigationBarHidden:YES];
+	
     if ( !self.customCamera )
         [self checkForLibraryImage];
 }
@@ -172,7 +183,6 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 {
     if ( !_cameraView ) {
         _cameraView = [DBCameraView initWithCaptureSession:self.cameraManager.captureSession];
-//        [_cameraView setHideLibraryButton:![NSStringFromClass(self.parentViewController.class) isEqualToString:@"DBCameraContainer"]];
         [_cameraView defaultInterface];
         [_cameraView setDelegate:self];
     }
@@ -245,27 +255,26 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 {
     _processingPhoto = NO;
     
-    NSMutableDictionary *finalMetadata = [NSMutableDictionary dictionaryWithDictionary:metadata];
-    finalMetadata[@"DBCameraSource"] = @"Camera";
+    _imageMetadata						= [NSMutableDictionary dictionaryWithDictionary:metadata];
+    _imageMetadata[@"DBCameraSource"]	= @"Camera";
     
     if ( !self.useCameraSegue ) {
         if ( [_delegate respondsToSelector:@selector(captureImageDidFinish:withMetadata:)] )
-            [_delegate captureImageDidFinish:image withMetadata:finalMetadata];
+            [_delegate captureImageDidFinish:image withMetadata:_imageMetadata];
     } else {
-        CGFloat newW = 256.0;
-        CGFloat newH = 340.0;
-        
-        if ( image.size.width > image.size.height ) {
-            newW = 340.0;
-            newH = ( newW * image.size.height ) / image.size.width;
-        }
-        
-        DBCameraSegueViewController *segue = [[DBCameraSegueViewController alloc] initWithImage:image thumb:[UIImage returnImage:image withSize:(CGSize){ newW, newH }]];
-        [segue enableGestures:YES];
-        [segue setDelegate:self.delegate];
-        [segue setCapturedImageMetadata:finalMetadata];
-        [self.navigationController pushViewController:segue animated:YES];
+		
+		CLImageEditor *editor	= [[CLImageEditor alloc] initWithImage:image];
+		editor.delegate			= self;
+		
+        [self.navigationController pushViewController:editor
+											 animated:YES];
     }
+}
+
+- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
+{
+	[_delegate captureImageDidFinish:image
+						withMetadata:_imageMetadata];
 }
 
 - (void) captureImageFailedWithError:(NSError *)error
