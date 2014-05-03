@@ -15,7 +15,7 @@ PODS:
   - CLImageEditor/TextTool (0.0.8):
     - CLImageEditor/Core
   - DBCamera (2.0):
-    - CLImageEditor/AllTools
+    - CLImageEditor/AllTools (= 0.0.8)
 
 DEPENDENCIES:
   - DBCamera (from `../`)
@@ -26,6 +26,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CLImageEditor: eb0d64c86a474e68ccbc591422a5d14d773a27a4
-  DBCamera: d549e5221cd3c73dee795692a6844b4ba7228677
+  DBCamera: d5e3bfdab712652e71fd612945b07c26935dce8d
 
 COCOAPODS: 0.32.1
