@@ -267,7 +267,7 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 		editor.delegate			= self;
 		
         [self.navigationController pushViewController:editor
-											 animated:YES];
+											 animated:NO];
     }
 }
 
