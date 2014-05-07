@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.platform       = :ios, '6.0'
   s.requires_arc   = true
 
-  s.dependency     'CLImageEditor/AllTools', '0.0.8'
+  s.dependency     'CLImageEditor/AllTools', '0.0.9'
 
   s.source_files   = 'DBCamera/*.{h,m}'
   s.resource       = ['DBCamera/Resources/*.{xib,xcassets}', 'DBCamera/Localizations/**']
