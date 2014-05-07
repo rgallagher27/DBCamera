@@ -1,21 +1,21 @@
 PODS:
-  - CLImageEditor/AllTools (0.0.8):
+  - CLImageEditor/AllTools (0.0.9):
     - CLImageEditor/Core
     - CLImageEditor/EmoticonTool
     - CLImageEditor/ResizeTool
     - CLImageEditor/StickerTool
     - CLImageEditor/TextTool
-  - CLImageEditor/Core (0.0.8)
-  - CLImageEditor/EmoticonTool (0.0.8):
+  - CLImageEditor/Core (0.0.9)
+  - CLImageEditor/EmoticonTool (0.0.9):
     - CLImageEditor/Core
-  - CLImageEditor/ResizeTool (0.0.8):
+  - CLImageEditor/ResizeTool (0.0.9):
     - CLImageEditor/Core
-  - CLImageEditor/StickerTool (0.0.8):
+  - CLImageEditor/StickerTool (0.0.9):
     - CLImageEditor/Core
-  - CLImageEditor/TextTool (0.0.8):
+  - CLImageEditor/TextTool (0.0.9):
     - CLImageEditor/Core
   - DBCamera (2.0):
-    - CLImageEditor/AllTools (= 0.0.8)
+    - CLImageEditor/AllTools (= 0.0.9)
 
 DEPENDENCIES:
   - DBCamera (from `../`)
@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  CLImageEditor: eb0d64c86a474e68ccbc591422a5d14d773a27a4
-  DBCamera: d5e3bfdab712652e71fd612945b07c26935dce8d
+  CLImageEditor: bc6ad3a212922fa76052eaa5c929b8cef41a2fd4
+  DBCamera: 7ef268861d053063cf98870515702bca32973055
 
 COCOAPODS: 0.32.1

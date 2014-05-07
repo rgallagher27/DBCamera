@@ -105,9 +105,14 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 	/**
 	 * Style Image Editor
 	 */
-	[[CLImageEditorTheme theme] setBackgroundColor:[UIColor whiteColor]];
-	[[CLImageEditorTheme theme] setToolbarColor:[UIColor whiteColor]];
-	[[CLImageEditorTheme theme] setToolbarTextColor:[UIColor blackColor]];
+	[[CLImageEditorTheme theme] setBackgroundColor:[UIColor blackColor]];
+	[[CLImageEditorTheme theme] setToolbarColor:[UIColor blackColor]];
+	[[CLImageEditorTheme theme] setToolbarTextColor:[UIColor whiteColor]];
+	[[CLImageEditorTheme theme] setToolIconColor:@"white"];
+	
+	[[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+	[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated
